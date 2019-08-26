@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 if (nameEditText.getText().length() == 0)
                     Toast.makeText(MainActivity.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
                 else {
-                    sharedPreferences.edit().putString("name", nameEditText.getText().toString());
+                    sharedPreferences.edit().putString("name", nameEditText.getText().toString()).apply();
                     Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                     startActivity(intent);
                     finish();

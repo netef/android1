@@ -18,7 +18,9 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-
+    
+    private final int LIVES = 3;
+    private final int DELAY_TIME = 3;
     private SharedPreferences sharedPreferences;
     private int points;
     private int lives;
@@ -69,8 +71,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             buttons[i].setOnClickListener(this);
         }
         points = 0;
-        lives = 3;
-        delay = 5;
+        lives = LIVES;
+        delay = DELAY_TIME;
+
         livesTxt.setText("Lives: " + lives);
         scoreTxt.setText("Score: " + points);
     }
@@ -93,7 +96,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void makeMole() {
-        delay = 5;
+        delay = 3;
         Random rand = new Random();
         int num = rand.nextInt(buttons.length - 1);
         while (true) {
@@ -110,7 +113,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(checkBackgroundMole(buttons[theNum]))
+                if (checkBackgroundMole(buttons[theNum]))
                     buttons[theNum].setBackgroundResource(images[0]);
             }
         }, 3000);
@@ -126,14 +129,34 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             livesTxt.setText("Lives: " + lives);
             if (lives == 0)
                 gameOver();
+
+            final Button b = button;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (checkBackgroundMiss(b))
+                        b.setBackgroundResource(images[0]);
+                }
+            }, 3000);
         } else if (checkBackgroundMole(button)) {
             button.setBackgroundResource(images[2]);
             points += 100;
             scoreTxt.setText("Score: " + points);
+            final Button b = button;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (checkBackgroundHit(b))
+                        b.setBackgroundResource(images[0]);
+                }
+            }, 3000);
         }
     }
 
     private void gameOver() {
+        sharedPreferences.edit().putInt("score", points).apply();
         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
         startActivity(intent);
         finish();
