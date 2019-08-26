@@ -18,7 +18,8 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    
+
+    private CountDownTimer countDownTimer;
     private final int LIVES = 3;
     private final int DELAY_TIME = 3;
     private SharedPreferences sharedPreferences;
@@ -79,7 +80,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void timer() {
-        new CountDownTimer(30000, 1000) {
+        countDownTimer = new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timerTxt.setText(millisUntilFinished / 1000 + "s");
                 if (delay == 0)
@@ -96,7 +97,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void makeMole() {
-        delay = 3;
+        delay = DELAY_TIME;
         Random rand = new Random();
         int num = rand.nextInt(buttons.length - 1);
         while (true) {
@@ -159,6 +160,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sharedPreferences.edit().putInt("score", points).apply();
         Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
         startActivity(intent);
+        countDownTimer.cancel();
         finish();
     }
 

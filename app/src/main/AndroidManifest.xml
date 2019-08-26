@@ -9,9 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.project.mainactivity.GameOverActivity"></activity>
-        <activity android:name="com.project.mainactivity.GameActivity" />
-        <activity android:name="com.project.mainactivity.MainActivity">
+        <activity
+            android:name="com.project.mainactivity.GameOverActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.project.mainactivity.GameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.project.mainactivity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
