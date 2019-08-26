@@ -1,4 +1,4 @@
-package com.electrofiesta.mainactivity;
+package com.project.mainactivity;
 
 import org.junit.Test;
 
