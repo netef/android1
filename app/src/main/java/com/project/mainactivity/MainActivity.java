@@ -1,3 +1,6 @@
+//Tom Boukai
+//307929075
+
 package com.project.mainactivity;
 
 import android.content.Intent;
